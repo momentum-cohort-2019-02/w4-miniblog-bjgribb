@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+import datetime
 
 # Create your models here.
 
@@ -23,7 +24,7 @@ class BlogPost(models.Model):
     content = models.TextField(max_length=2000, help_text='Write your post here.')
 
     # This represents the written date (posted date)
-    post_date = models.DateField()
+    post_date = models.DateField(default=datetime.date.today)
 
     # This allows the selection of a blogpost topic.
     topic = models.ManyToManyField(Topic, help_text='Select the topic for this post.')
@@ -36,6 +37,12 @@ class BlogPost(models.Model):
 
     def get_absolute_url(self):
         return reverse("(blogpost-detail)", args=[str(self.id)])
+
+    def display_topic(self):
+        """Creating a string for the topic so it can be displayed in admin."""
+        return ', '.join(topic.name for topic in self.topic.all()[:3])
+
+    display_topic.short_description = 'Topic'
     
 
 class Blogger(models.Model):
