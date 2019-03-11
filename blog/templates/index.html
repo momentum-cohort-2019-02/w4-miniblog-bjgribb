@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Blog Central</h1>
+    <p>Welcome to the Blog Page by Brian</p>
+    <h2>Records</h2>
+    <p>We currently have the following active posts and bloggers.</p>
+    <ul>
+        <li><strong>Posts:</strong> {{ num_blogposts }}</li>
+        <li><strong>Bloggers:</strong> {{num_bloggers }}</li>
+    </ul>
+{% endblock %}
+

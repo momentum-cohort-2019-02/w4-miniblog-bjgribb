@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1><strong>{{ blogpost.post }}</strong></h1>
+
+    <p><strong>Blogger: </strong><a href="">{{ blogpost.blogger }}</a></p>
+    <p><strong>Posted Date: </strong>{{ blogpost.post_date }}</p>
+    <p><strong>Content: </strong>{{ blogpost.content }}</p>
+
+{% endblock %}

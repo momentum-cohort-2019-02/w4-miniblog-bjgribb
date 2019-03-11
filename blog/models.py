@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 import datetime
+import uuid # going to use this to create the blogpost detail instances.
 
 # Create your models here.
 
@@ -11,10 +12,20 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
+    
+class BlogPostDetail(models.Model):
+    """Model representing the actual post and displaying content."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    blogpost = models.ForeignKey('BlogPost', on_delete=models.SET_NULL, null=True)
+    inappropriate_content = models.BooleanField(verbose_name="Flag as inappropriate")
+
+    def __str__(self):
+        return f'{self.id} ({self.blogpost.post})'
+
+
 class BlogPost(models.Model):
     """Model representing a blog-post."""
 
-    """Name or title of the post."""
     post = models.CharField(max_length=200, help_text='Enter the blog post title here.')
 
     # Foreign Key used because a post will only have one blogger but a blogger could have multiple blogs.
@@ -36,7 +47,7 @@ class BlogPost(models.Model):
         return self.post
 
     def get_absolute_url(self):
-        return reverse("(blogpost-detail)", args=[str(self.id)])
+        return reverse("blogpost-detail", args=[str(self.id)])
 
     def display_topic(self):
         """Creating a string for the topic so it can be displayed in admin."""
@@ -54,13 +65,10 @@ class Blogger(models.Model):
     class Meta:
         ordering = ['last_name', 'first_name']
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular author."""
-        return reverse("blogger-detail", args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular author."""
+    #     return reverse("blogger-detail", args=[str(self.id)])
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
-
-    
-
 

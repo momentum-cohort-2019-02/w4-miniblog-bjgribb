@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Blog Posts</h1>
+    {% if blogpost_list %}
+    <ul>
+    {% for blogpost in blogpost_list %}
+        <li>
+            <a href="{{ blogpost.get_absolute_url }}">{{ blogpost.post }}</a> ({{ blogpost.blogger }}) <strong>Posted: </strong> {{ blogpost.post_date }}
+        </li>   
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>No posts at this time, please check back.</p>
+    {% endif %}
+{% endblock  %}
